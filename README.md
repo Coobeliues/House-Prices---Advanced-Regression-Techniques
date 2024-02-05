@@ -59,7 +59,7 @@ $ make submissions
 
 Давайте ка взглянем на наш датасет
 <pre>
-`` `python
+```python
 all_data.head(10)
-` `
+```
 </pre>
