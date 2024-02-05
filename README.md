@@ -57,7 +57,10 @@ $ make submissions
 Здесь будут использованы различные модели, методы предобработок, транформации скошенности и тд и тп, по ходу дела показывается.
 Метрика оценивания нашей модельки RMSE.
 
-Давайте ка взглянем на наш датасет
+Давайтека взглянем на наш датасет
+```sh
+$ all_data.head(10) 
+```
 <div>
 
 <table border="1" class="dataframe">
@@ -969,3 +972,195 @@ $ make submissions
   </tbody>
 </table>
 </div>
+
+```sh
+$ all_data.nunique()
+```
+
+MSSubClass         16
+MSZoning            5
+LotFrontage       128
+LotArea          1951
+Street              2
+Alley               2
+LotShape            4
+LandContour         4
+Utilities           2
+LotConfig           5
+LandSlope           3
+Neighborhood       25
+Condition1          9
+Condition2          8
+BldgType            5
+HouseStyle          8
+OverallQual        10
+OverallCond         9
+YearBuilt         118
+YearRemodAdd       61
+RoofStyle           6
+RoofMatl            8
+Exterior1st        15
+Exterior2nd        16
+MasVnrType          3
+MasVnrArea        444
+ExterQual           4
+ExterCond           5
+Foundation          6
+BsmtQual            4
+BsmtCond            4
+BsmtExposure        4
+BsmtFinType1        6
+BsmtFinSF1        991
+BsmtFinType2        6
+BsmtFinSF2        272
+BsmtUnfSF        1135
+TotalBsmtSF      1058
+Heating             6
+HeatingQC           5
+CentralAir          2
+Electrical          5
+1stFlrSF         1083
+2ndFlrSF          635
+LowQualFinSF       36
+GrLivArea        1292
+BsmtFullBath        4
+BsmtHalfBath        3
+FullBath            5
+HalfBath            3
+BedroomAbvGr        8
+KitchenAbvGr        4
+KitchenQual         4
+TotRmsAbvGrd       14
+Functional          7
+Fireplaces          5
+FireplaceQu         5
+GarageType          6
+GarageYrBlt       103
+GarageFinish        3
+GarageCars          6
+GarageArea        603
+GarageQual          5
+GarageCond          5
+PavedDrive          3
+WoodDeckSF        379
+OpenPorchSF       252
+EnclosedPorch     183
+3SsnPorch          31
+ScreenPorch       121
+PoolArea           14
+PoolQC              3
+Fence               4
+MiscFeature         4
+MiscVal            38
+MoSold             12
+YrSold              5
+SaleType            9
+SaleCondition       6
+dtype: int64
+
+У нас имеется 79  feature columns, и целевая переменная это SalePrice. 
+Если посмотреть, здесь мы можем видеть категориальные и числовые столбцы.
+В столбцах такие как Alley, PoolQC, Fence, MiscFeature очень большие пропущенные значения, конечно и в других имеется пропущенные значения, но не столь критичные.
+Далее, я попытаюсь поработать с пропущенными значениями, то есть оставлять их, какими методоми заполнить пустые места или же удалить
+
+```sh
+$ all_data.info()
+```
+<class 'pandas.core.frame.DataFrame'>
+Index: 2919 entries, 0 to 1458
+Data columns (total 79 columns):
+ #   Column         Non-Null Count  Dtype  
+---  ------         --------------  -----  
+ 0   MSSubClass     2919 non-null   int64  
+ 1   MSZoning       2915 non-null   object 
+ 2   LotFrontage    2433 non-null   float64
+ 3   LotArea        2919 non-null   int64  
+ 4   Street         2919 non-null   object 
+ 5   Alley          198 non-null    object 
+ 6   LotShape       2919 non-null   object 
+ 7   LandContour    2919 non-null   object 
+ 8   Utilities      2917 non-null   object 
+ 9   LotConfig      2919 non-null   object 
+ 10  LandSlope      2919 non-null   object 
+ 11  Neighborhood   2919 non-null   object 
+ 12  Condition1     2919 non-null   object 
+ 13  Condition2     2919 non-null   object 
+ 14  BldgType       2919 non-null   object 
+ 15  HouseStyle     2919 non-null   object 
+ 16  OverallQual    2919 non-null   int64  
+ 17  OverallCond    2919 non-null   int64  
+ 18  YearBuilt      2919 non-null   int64  
+ 19  YearRemodAdd   2919 non-null   int64  
+ 20  RoofStyle      2919 non-null   object 
+ 21  RoofMatl       2919 non-null   object 
+ 22  Exterior1st    2918 non-null   object 
+ 23  Exterior2nd    2918 non-null   object 
+ 24  MasVnrType     1153 non-null   object 
+ 25  MasVnrArea     2896 non-null   float64
+ 26  ExterQual      2919 non-null   object 
+ 27  ExterCond      2919 non-null   object 
+ 28  Foundation     2919 non-null   object 
+ 29  BsmtQual       2838 non-null   object 
+ 30  BsmtCond       2837 non-null   object 
+ 31  BsmtExposure   2837 non-null   object 
+ 32  BsmtFinType1   2840 non-null   object 
+ 33  BsmtFinSF1     2918 non-null   float64
+ 34  BsmtFinType2   2839 non-null   object 
+ 35  BsmtFinSF2     2918 non-null   float64
+ 36  BsmtUnfSF      2918 non-null   float64
+ 37  TotalBsmtSF    2918 non-null   float64
+ 38  Heating        2919 non-null   object 
+ 39  HeatingQC      2919 non-null   object 
+ 40  CentralAir     2919 non-null   object 
+ 41  Electrical     2918 non-null   object 
+ 42  1stFlrSF       2919 non-null   int64  
+ 43  2ndFlrSF       2919 non-null   int64  
+ 44  LowQualFinSF   2919 non-null   int64  
+ 45  GrLivArea      2919 non-null   int64  
+ 46  BsmtFullBath   2917 non-null   float64
+ 47  BsmtHalfBath   2917 non-null   float64
+ 48  FullBath       2919 non-null   int64  
+ 49  HalfBath       2919 non-null   int64  
+ 50  BedroomAbvGr   2919 non-null   int64  
+ 51  KitchenAbvGr   2919 non-null   int64  
+ 52  KitchenQual    2918 non-null   object 
+ 53  TotRmsAbvGrd   2919 non-null   int64  
+ 54  Functional     2917 non-null   object 
+ 55  Fireplaces     2919 non-null   int64  
+ 56  FireplaceQu    1499 non-null   object 
+ 57  GarageType     2762 non-null   object 
+ 58  GarageYrBlt    2760 non-null   float64
+ 59  GarageFinish   2760 non-null   object 
+ 60  GarageCars     2918 non-null   float64
+ 61  GarageArea     2918 non-null   float64
+ 62  GarageQual     2760 non-null   object 
+ 63  GarageCond     2760 non-null   object 
+ 64  PavedDrive     2919 non-null   object 
+ 65  WoodDeckSF     2919 non-null   int64  
+ 66  OpenPorchSF    2919 non-null   int64  
+ 67  EnclosedPorch  2919 non-null   int64  
+ 68  3SsnPorch      2919 non-null   int64  
+ 69  ScreenPorch    2919 non-null   int64  
+ 70  PoolArea       2919 non-null   int64  
+ 71  PoolQC         10 non-null     object 
+ 72  Fence          571 non-null    object 
+ 73  MiscFeature    105 non-null    object 
+ 74  MiscVal        2919 non-null   int64  
+ 75  MoSold         2919 non-null   int64  
+ 76  YrSold         2919 non-null   int64  
+ 77  SaleType       2918 non-null   object 
+ 78  SaleCondition  2919 non-null   object 
+dtypes: float64(11), int64(25), object(43)
+memory usage: 1.8+ MB
+
+#### Sales Price Distribution
+count      1460.000000
+mean     180921.195890
+std       79442.502883
+min       34900.000000
+25%      129975.000000
+50%      163000.000000
+75%      214000.000000
+max      755000.000000
+Name: SalePrice, dtype: float64
+![Sales Price Distribution](photo/image.png)
