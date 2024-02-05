@@ -1,0 +1,20 @@
+black==24.1.1
+flake8==7.0.0
+# ipykernel==6.29.0
+# ipython==8.18.1
+isort==5.13.2
+# jupyter==1.0.0
+# jupyter-console==6.6.3
+# jupyterlab==4.0.11
+kaggle==1.6.3
+lightgbm==4.3.0
+matplotlib @ file:///croot/matplotlib-suite_1698692105134/work
+matplotlib-inline==0.1.6
+numpy @ file:///croot/numpy_and_numpy_base_1704311704800/work/dist/numpy-1.26.3-cp39-cp39-linux_x86_64.whl#sha256=93e7b9e5e2090dd03810e7c1b02cb077d3ef49fc713f0af531e0667375d9decb
+pandas @ file:///croot/pandas_1702317985682/work/dist/pandas-2.1.4-cp39-cp39-linux_x86_64.whl#sha256=324122d54922a1f7a8103c955ecfc280ac90ea4d0a9ae7e365d5a477d5f0713e
+Pillow @ file:///croot/pillow_1696580024257/work
+scikit-learn==1.4.0
+scipy @ file:///croot/scipy_1701295040508/work/dist/scipy-1.11.4-cp39-cp39-linux_x86_64.whl#sha256=1f9b757a21b482354a59770c1b025701f2228439c621dc0894a792120398a6e9
+seaborn==0.13.2
+tqdm==4.66.1
+xgboost==2.0.3

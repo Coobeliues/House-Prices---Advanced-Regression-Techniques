@@ -51,9 +51,7 @@ def create_tuned_models(X_train, y):
     models_tuned = {
         "Ridge": Ridge(alpha=best_params_ridge),
         "Random Forest": RandomForestRegressor(**best_params_rf, random_state=42),
-        "Gradient Boosting": GradientBoostingRegressor(
-            **best_params_gb, random_state=42
-        ),
+        "Gradient Boosting": GradientBoostingRegressor(**best_params_gb, random_state=42),
         "AdaBoost": AdaBoostRegressor(**best_params_ada, random_state=42),
         "XGB": XGBRegressor(**best_params_xgb, random_state=42),
         "LassoCV": LassoCV(**best_params_lasso),

@@ -8,12 +8,16 @@ warnings.filterwarnings('ignore')
 train, test, all_data = prepprocessing.load_data("/home/ernar/Desktop/house_price/dataset/train.csv",
                                                  "/home/ernar/Desktop/house_price/dataset/test.csv")
 
+# col = ['MSSubClass', 'OverallCond', 'BsmtHalfBath', '3SsnPorch', 'BsmtFinSF1', 'BsmtFinSF2', 'BsmtUnfSF', 'ScreenPorch', 'PoolArea', 'MiscVal', 'MoSold', 'YrSold'] 
+# all_data.drop(columns=col, axis=1, inplace=True) 
+# col = ['Alley', 'PoolQC', 'Fence', 'MiscFeature']
+# all_data.drop(columns=col, axis=1, inplace=True)
+
 train, all_data, info_trans = prepprocessing.Transform(train, all_data, transform='log')
 
 X_train = all_data[:train.shape[0]]
 X_test = all_data[train.shape[0]:]
 y = train.SalePrice
-
 
 preprocessor_mean_minmax_mode_train = prepprocessing.preprocessingPipeline(X_train, imputer_strategy='mean', scaler='MinMaxScaler', cat_imputer_strategy='mode')
 X_train_processed = preprocessor_mean_minmax_mode_train.fit_transform(X_train)
@@ -58,4 +62,5 @@ for model_name, model in models_tuned.items():
     })
 
 model_info_df = pd.DataFrame(model_info)
-model_info_df.to_csv("/home/ernar/Desktop/house_price/model_info.csv", index=False)
+model_info_df.to_csv("/home/ernar/Desktop/house_price/model_infos/model_info.csv", index=False)
+
