@@ -16,9 +16,9 @@
 
 ## Использование
 Для запуска проекта выберите методы предобработок и трансформации
-```sh
-$ imputer_strategy=None, scaler=None, cat_imputer_strategy=None
-$ transform=None
+```python
+ imputer_strategy=None, scaler=None, cat_imputer_strategy=None
+ transform=None
 ```
 Если не хотите обучать все модельки которые есть в этом коде, то в файле MyTrain.py вы можете убрать ненужные модели.
 И после смело можете запустить
@@ -32,19 +32,19 @@ $ transform=None
 
 ### Установка библиотек 
 Для установки библиотек, выполните команду:
-```sh
-$ pip install requirements.txt
+```python
+ pip install requirements.txt
 ```
 И далее не забудьте создать виртуальное окружение
 
 
 ## Сабмит в каггл 
 Для сабмита и получения результатов ваших предсказаний выполните эти команды
-```sh
-$ make submit FILES="ваш_файл.csv" COMMENT="твой_комментарий"
+```python
+ make submit FILES="ваш_файл.csv" COMMENT="твой_комментарий"
 ```
-```sh
-$ make submissions
+```python
+ make submissions
 ```
 Важно, чтобы отправить свои сабмиты и в целом использовать аpi, получите токен.
 
@@ -58,7 +58,7 @@ $ make submissions
 Метрика оценивания нашей модельки RMSE.
 
 Давайтека взглянем на наш датасет
-```sh
+```python
 $ all_data.head(10) 
 ```
 <div>
@@ -976,7 +976,7 @@ $ all_data.head(10)
 ```python
  all_data.nunique()
 ```
-
+---------------|-------
 MSSubClass     |    16 
 MSZoning       |    5
 LotFrontage    |   128
@@ -1065,8 +1065,8 @@ dtype: int64
 В столбцах такие как Alley, PoolQC, Fence, MiscFeature очень большие пропущенные значения, конечно и в других имеется пропущенные значения, но не столь критичные.
 Далее, я попытаюсь поработать с пропущенными значениями, то есть оставлять их, какими методоми заполнить пустые места или же удалить
 
-```sh
-$ all_data.info()
+```python
+ all_data.info()
 ```
 <class 'pandas.core.frame.DataFrame'>
 Index: 2919 entries, 0 to 1458
