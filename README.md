@@ -976,6 +976,7 @@ $ all_data.head(10)
 ```sh
 $ all_data.nunique()
 ```
+<div align="left">
 
 MSSubClass         16
 MSZoning            5
@@ -1057,6 +1058,8 @@ YrSold              5
 SaleType            9
 SaleCondition       6
 dtype: int64
+
+</div>
 
 У нас имеется 79  feature columns, и целевая переменная это SalePrice. 
 Если посмотреть, здесь мы можем видеть категориальные и числовые столбцы.
