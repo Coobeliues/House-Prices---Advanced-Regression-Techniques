@@ -1067,8 +1067,7 @@ dtype: int64
 
 ```python
  all_data.info()
-```
-<class 'pandas.core.frame.DataFrame'>
+ <class 'pandas.core.frame.DataFrame'>
 Index: 2919 entries, 0 to 1458
 Data columns (total 79 columns):
  #   Column         Non-Null Count  Dtype  
@@ -1154,8 +1153,11 @@ Data columns (total 79 columns):
  78  SaleCondition  2919 non-null   object 
 dtypes: float64(11), int64(25), object(43)
 memory usage: 1.8+ MB
+```
+
 
 #### Sales Price Distribution
+```
 count      1460.000000
 mean     180921.195890
 std       79442.502883
@@ -1165,4 +1167,5 @@ min       34900.000000
 75%      214000.000000
 max      755000.000000
 Name: SalePrice, dtype: float64
+```
 ![Sales Price Distribution](photo/image.png)
